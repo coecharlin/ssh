@@ -43,5 +43,37 @@ Agora você pode fazer login do seu computador desktop com Linux utilizando o co
 ```bash
 ssh nomeUsuario@DnsOuIpServidor
 ```
+
+## Como configuro a autenticação de chave pública?
+
+Abra o Terminal e digite os seguintes comandos se o diretório .ssh não existir:
+
 ```bash
+mkdir  -p  $HOME / .ssh
+chmod 0700 $HOME / .ssh
+```
+### 1. Crie o par de chaves
+
+No computador "Cliente", gere um par de chaves para o protocolo.
+```bash
+ssh-keygen  -t rsa
+```
+
+Você precisa definir o local e o nome do par de chaves. Eu recomendo que você use o local padrão se você ainda não tiver outra chave lá, por exemplo: $HOME/.ssh/id_rsa. Você será solicitado a fornecer uma senha (senha) para sua chave privada. Sugiro que você configure uma senha quando solicitado. Você deve ver dois novos arquivos no diretório $HOME/.ssh/:
+- `$HOME/.ssh/id_rsa` – contém sua chave privada.
+- `$HOME/.ssh/id_rsa.pub` – contém sua chave pública.
+
+### 2. Instale a chave pública no servidor remoto
+
+Use o comando `ssh-copy-id` para copiar seu arquivo de chave pública (por exemplo, $HOME/.ssh/id_rsa.pub) para sua conta no servidor/host remoto (por exemplo, usuario@servidor.local). Para isso, digite o seguinte comando em seu computador "Cliente":
+
+```bash
+ssh-copy-id -i  $HOME/.ssh/id_rsa.pub usuario@servidor.local
+```
+### 3. Teste
+
+Use o comando `ssh-copy-id` para copiar seu arquivo de chave pública (por exemplo, $HOME/.ssh/id_rsa.pub) para sua conta no servidor/host remoto (por exemplo, usuario@servidor.local). Para isso, digite o seguinte comando em seu computador "Cliente":
+
+```bash
+ssh-copy-id -i  $HOME/.ssh/id_rsa.pub usuario@servidor.local
 ```
